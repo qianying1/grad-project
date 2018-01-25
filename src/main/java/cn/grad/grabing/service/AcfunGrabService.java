@@ -7,7 +7,7 @@ public interface AcfunGrabService{
 
 	void beginGrabing();
 
-	void initBeforeGrabing(String targetValue);
+	Connection initBeforeGrabing(String targetValue);
 
 	void initJsoupDocumentConnection(Connection connection);
 }

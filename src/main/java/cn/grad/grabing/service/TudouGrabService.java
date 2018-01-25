@@ -1,8 +1,10 @@
 package cn.grad.grabing.service;
 
+import org.jsoup.Connection;
+
 public interface TudouGrabService {
 
 	void beginGrabing();
 
-	void initBeforeGrabing(String targetValue);
+	Connection initBeforeGrabing(String targetValue);
 }

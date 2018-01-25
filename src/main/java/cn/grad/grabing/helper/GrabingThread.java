@@ -1,31 +1,12 @@
 package cn.grad.grabing.helper;
 
+import cn.grad.grabing.service.*;
+import cn.grad.grabing.service.impl.*;
 import cn.grad.grabing.util.ApplicationContextUtil;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import cn.grad.grabing.service.AcfunGrabService;
-import cn.grad.grabing.service.BiliBiliGrabService;
-import cn.grad.grabing.service.DouyuGrabService;
-import cn.grad.grabing.service.IqiyiGrabService;
-import cn.grad.grabing.service.LeshiGrabService;
-import cn.grad.grabing.service.PptvGrabService;
-import cn.grad.grabing.service.SohuGrabService;
-import cn.grad.grabing.service.TudouGrabService;
-import cn.grad.grabing.service.YoukuGrabService;
-import cn.grad.grabing.service.impl.AcfunGrabServiceImpl;
-import cn.grad.grabing.service.impl.BilibiliGrabServiceImpl;
-import cn.grad.grabing.service.impl.DouyuGrabServiceImpl;
-import cn.grad.grabing.service.impl.IqiyiGrabServiceImpl;
-import cn.grad.grabing.service.impl.LeshiGrabServiceImpl;
-import cn.grad.grabing.service.impl.PptvGrabServiceImpl;
-import cn.grad.grabing.service.impl.SohuGrabServiceImpl;
-import cn.grad.grabing.service.impl.TudouGrabServiceImpl;
-import cn.grad.grabing.service.impl.YoukuGrabServiceImpl;
 import cn.grad.grabing.util.BaseUtil;
 import cn.grad.grabing.util.StrPropertiesMapper;
 import cn.grad.grabing.util.Validation;
+import org.jsoup.Connection;
 
 public class GrabingThread extends BaseUtil implements Runnable {
 
@@ -160,8 +141,8 @@ public class GrabingThread extends BaseUtil implements Runnable {
      */
     private void beginAcfunGrabing() {
         acfunGrabServiceImpl = (AcfunGrabServiceImpl) ApplicationContextUtil.getBean("acfunGrabServiceImpl");
-        acfunGrabServiceImpl.initBeforeGrabing(targetValue);
-        acfunGrabServiceImpl.initJsoupDocumentConnection();
+        Connection connection = acfunGrabServiceImpl.initBeforeGrabing(targetValue);
+        acfunGrabServiceImpl.initJsoupDocumentConnection(connection);
         acfunGrabServiceImpl.beginGrabing();
     }
 

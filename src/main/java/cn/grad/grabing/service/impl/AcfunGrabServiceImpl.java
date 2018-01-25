@@ -1,5 +1,6 @@
 package cn.grad.grabing.service.impl;
 
+import cn.grad.grabing.helper.AcfunDocumentInitailizer;
 import cn.grad.grabing.helper.acfun.SectionUtil;
 import cn.grad.grabing.helper.acfun.index.*;
 import cn.grad.grabing.service.AcfunGrabService;
@@ -27,6 +28,8 @@ public class AcfunGrabServiceImpl extends BaseUtil implements AcfunGrabService {
     private BananaServiceHelper bananaServiceHelper;
     @Autowired
     private EntertainmentServiceHelper entertainmentServiceHelper;
+    @Autowired
+    private AcfunDocumentInitailizer acfunDocumentInitailizer;
 
     /*private final String configuationPath = StrPropertiesMapper.CONFIGURATION_BASE_PATH + StrPropertiesMapper.ACFUN
             + ".properties";*/
@@ -70,6 +73,8 @@ public class AcfunGrabServiceImpl extends BaseUtil implements AcfunGrabService {
         entertainmentServiceHelper.analizeEntertainmentSection(getDoc());
     }
 
-    public void initJsoupDocumentConnection(Connection connection){}
+    public void initJsoupDocumentConnection(Connection connection){
+        acfunDocumentInitailizer.analizeConfigurationAndUseInConn(connection);
+    }
 
 }

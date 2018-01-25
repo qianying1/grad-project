@@ -1,5 +1,7 @@
 package cn.grad.grabing.service;
 
+import org.jsoup.Connection;
+
 public interface YoukuGrabService {
 
     /**
@@ -7,5 +9,5 @@ public interface YoukuGrabService {
      */
     void beginGrabing();
 
-    void initBeforeGrabing(String targetValue);
+    Connection initBeforeGrabing(String targetValue);
 }

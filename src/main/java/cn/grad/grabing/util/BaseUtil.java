@@ -19,8 +19,6 @@ public class BaseUtil<T extends Class> extends BaseLogger {
     protected Mapper dozer;
     @Autowired
     private DocumentInitailizer documentInitailizer;
-    @Autowired
-    private AcfunDocumentInitailizer acfunDocumentInitailizer;
 
     private String seedUri;
     //	private Properties grabingConfiguations;
@@ -31,20 +29,20 @@ public class BaseUtil<T extends Class> extends BaseLogger {
      *
      * @param targetUri
      */
-    public void initBeforeGrabing(String targetUri) {
+    public Connection initBeforeGrabing(String targetUri) {
         if (Validation.isStringNull(targetUri)) {
             log.error("the target url can`t be null!");
-            return;
+            return null;
         }
         this.seedUri = targetUri;
 //		PropertiesIO io = new PropertiesIO();
 //		grabingConfiguations = io.initConnector(configuationPath);
         Connection conn = documentInitailizer.initConnectionByUrl(this.seedUri);
-        acfunDocumentInitailizer.analizeConfigurationAndUseInConn(conn);
         if (!Validation.isObjNull(conn))
             this.doc = documentInitailizer.getDocumentByConn(conn);
         else
             log.error("could`t gettig html document from url: " + this.seedUri);
+        return conn;
     }
 
     public void grabingFromReptile(String targetWebName) {
