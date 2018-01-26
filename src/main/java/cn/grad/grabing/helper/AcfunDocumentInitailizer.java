@@ -2,7 +2,9 @@ package cn.grad.grabing.helper;
 
 import cn.grad.grabing.util.BaseLogger;
 import cn.grad.grabing.util.Validation;
+import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebClientOptions;
+import com.gargoylesoftware.htmlunit.WebRequest;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Connection;
@@ -147,101 +149,219 @@ public class AcfunDocumentInitailizer extends BaseLogger {
         return conn;
     }
 
-    public static void initWebClientOptions(WebClientOptions options){
+    public static void initWebClientOptions(WebClientOptions webClientOptions){
 
     }
 
-    public static void initWebRequestUrl(URL url){
+    public static void initWebRequest(WebRequest request){
 
     }
 
-    @Value("#{systemConfigs['webClient.options.timeout']}")
+    /**
+     * 设置请求超时时间
+     *
+     * @param timeout
+     */
+    @Value("#{acfunConfigs['timeout']}")
     public void setTimeout(int timeout) {
         this.timeout = timeout;
     }
 
+    /**
+     * 获取请求超时时间
+     *
+     * @return
+     */
     public int getTimeout() {
         return timeout;
     }
 
+    /**
+     * 获取浏览器代理
+     *
+     * @return
+     */
     public String getUserAgent() {
         return userAgent;
     }
 
-    @Value("#{systemConfigs['webRequest.header.User-Agent']}")
+    /**
+     * 设置浏览器代理
+     *
+     * @param userAgent
+     */
+    @Value("#{acfunConfigs['userAgent']}")
     public void setUserAgent(String userAgent) {
         this.userAgent = userAgent;
     }
 
+    /**
+     * 获取cookie键
+     *
+     * @return
+     */
     public String getCookieKey() {
         return cookieKey;
     }
 
+    /**
+     * 设置cookie键
+     *
+     * @param cookieKey
+     */
+    @Value("#{acfunConfigs['cookieKey']}")
     public void setCookieKey(String cookieKey) {
         this.cookieKey = cookieKey;
     }
 
+    /**
+     * 获取cookie值
+     *
+     * @return
+     */
     public String getCookieValue() {
         return cookieValue;
     }
 
-    //    @Value("#{systemConfigs['']}"})
+    /**
+     * 设置cookie值
+     *
+     * @param cookieValue
+     */
+    @Value("#{acfunConfigs['cookieValue']}")
     public void setCookieValue(String cookieValue) {
         this.cookieValue = cookieValue;
     }
 
+    /**
+     * 获取需要传递的参数键
+     *
+     * @return
+     */
     public String getDataKey() {
         return dataKey;
     }
 
+    /**
+     * 设置需要传递的参数键
+     *
+     * @param dataKey
+     */
+    @Value("#{acfunConfigs['dataKey']}")
     public void setDataKey(String dataKey) {
         this.dataKey = dataKey;
     }
 
+    /**
+     * 获取需要传递的参数值
+     *
+     * @return
+     */
     public String getDataValue() {
         return dataValue;
     }
 
+    /**
+     * 设置需要传递的参数值
+     *
+     * @param dataValue
+     */
+    @Value("#{acfunConfigs['dataValue']}")
     public void setDataValue(String dataValue) {
         this.dataValue = dataValue;
     }
 
+    /**
+     * 获取是否忽略请求内容类型
+     *
+     * @return
+     */
     public Boolean getIgnoreContentType() {
         return ignoreContentType;
     }
 
+    /**
+     * 设置是否忽略请求内容类型
+     *
+     * @param ignoreContentType
+     */
+    @Value("#{acfunConfigs['ignoreContentType']}")
     public void setIgnoreContentType(Boolean ignoreContentType) {
         this.ignoreContentType = ignoreContentType;
     }
 
+    /**
+     * 获取是否跟随页面跳转
+     *
+     * @return
+     */
     public Boolean getFollowRedirects() {
         return followRedirects;
     }
 
+    /**
+     * 设置是否跟随跳转
+     *
+     * @param followRedirects
+     */
+    @Value("#{acfunConfigs['followRedirects']}")
     public void setFollowRedirects(Boolean followRedirects) {
         this.followRedirects = followRedirects;
     }
 
+    /**
+     * 获取是否忽略http头错误
+     *
+     * @return
+     */
     public Boolean getIgnoreHttpErrors() {
         return ignoreHttpErrors;
     }
 
+    /**
+     * 设置是否忽略http头错误
+     *
+     * @param ignoreHttpErrors
+     */
+    @Value("#{acfunConfigs['ignoreHttpErrors']}")
     public void setIgnoreHttpErrors(Boolean ignoreHttpErrors) {
         this.ignoreHttpErrors = ignoreHttpErrors;
     }
 
+    /**
+     * 获取目标页面最大页面容量
+     *
+     * @return
+     */
     public Integer getMaxBodySize() {
         return maxBodySize;
     }
 
+    /**
+     * 设置目标页面最大容量
+     *
+     * @param maxBodySize
+     */
+    @Value("#{acfunConfigs['maxBodySize']}")
     public void setMaxBodySize(Integer maxBodySize) {
         this.maxBodySize = maxBodySize;
     }
 
+    /**
+     * 获取目标页面访问者
+     *
+     * @return
+     */
     public String getReferrer() {
         return referrer;
     }
 
+    /**
+     * 设置目标页面访问者
+     *
+     * @param referrer
+     */
+    @Value("#{acfunConfigs['referrer']}")
     public void setReferrer(String referrer) {
         this.referrer = referrer;
     }
@@ -260,7 +380,7 @@ public class AcfunDocumentInitailizer extends BaseLogger {
      *
      * @param javaScriptEnabled
      */
-    @Value("#{acfunConfigs['acfun.webClient.options.javaScriptEnabled']}")
+    @Value("#{acfunConfigs['webClient.options.javaScriptEnabled']}")
     public void setJavaScriptEnabled(Boolean javaScriptEnabled) {
         this.javaScriptEnabled = javaScriptEnabled;
     }
@@ -279,7 +399,7 @@ public class AcfunDocumentInitailizer extends BaseLogger {
      *
      * @param cssEnabled
      */
-    @Value("#{acfunConfigs['acfun.webClient.options.cssEnabled']}")
+    @Value("#{acfunConfigs['webClient.options.cssEnabled']}")
     public void setCssEnabled(Boolean cssEnabled) {
         this.cssEnabled = cssEnabled;
     }
@@ -298,7 +418,7 @@ public class AcfunDocumentInitailizer extends BaseLogger {
      *
      * @param throwExceptionOnFailingStatusCode
      */
-    @Value("#{acfunConfigs['acfun.webClient.options.throwExceptionOnFailingStatusCode']}")
+    @Value("#{acfunConfigs['webClient.options.throwExceptionOnFailingStatusCode']}")
     public void setThrowExceptionOnFailingStatusCode(Boolean throwExceptionOnFailingStatusCode) {
         this.throwExceptionOnFailingStatusCode = throwExceptionOnFailingStatusCode;
     }
@@ -307,6 +427,7 @@ public class AcfunDocumentInitailizer extends BaseLogger {
         return throwExceptionOnScriptError;
     }
 
+    @Value("#{acfunConfigs['webClient.options.throwExceptionOnScriptError']}")
     public void setThrowExceptionOnScriptError(Boolean throwExceptionOnScriptError) {
         this.throwExceptionOnScriptError = throwExceptionOnScriptError;
     }

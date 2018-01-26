@@ -10,4 +10,8 @@ public interface AcfunGrabService{
 	Connection initBeforeGrabing(String targetValue);
 
 	void initJsoupDocumentConnection(Connection connection);
+
+	void initWebClient();
+
+	void initWebRequest();
 }

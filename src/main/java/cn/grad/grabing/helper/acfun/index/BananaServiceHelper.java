@@ -81,16 +81,14 @@ public class BananaServiceHelper extends BaseLogger {
             try {
                 views = Long.valueOf(NumberFormater.pareseNumberStr(titleStr.substring(titleStr.indexOf("点击") + 2, titleStr.indexOf("评论"))));
             } catch (Exception e) {
-                e.printStackTrace();
-                log.error("fail to grab a views data from acfun banana section", e);
+                log.error("fail to grab a views data from acfun banana section nest exception is: "+e);
                 views = Long.valueOf(0);
             }
             Long comments;
             try {
                 comments = Long.valueOf(NumberFormater.pareseNumberStr(titleStr.substring(titleStr.indexOf("评论") + 2, titleStr.length())));
             } catch (Exception e) {
-                e.printStackTrace();
-                log.error("fail to grab a comments data from acfun banana section", e);
+                log.error("fail to grab a comments data from acfun banana section nest exception is:"+e);
                 comments = Long.valueOf(0);
             }
             Element authorEl = blockTitleEl.getElementsByTag("em").first().getElementsByTag("a").first();

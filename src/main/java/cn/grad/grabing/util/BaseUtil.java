@@ -1,16 +1,12 @@
 package cn.grad.grabing.util;
 
-import cn.grad.grabing.helper.AcfunDocumentInitailizer;
 import cn.grad.grabing.helper.DocumentInitailizer;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.gargoylesoftware.htmlunit.WebClient;
 import org.dozer.Mapper;
 import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Properties;
 
 @Component
 public class BaseUtil<T extends Class> extends BaseLogger {
@@ -21,8 +17,8 @@ public class BaseUtil<T extends Class> extends BaseLogger {
     private DocumentInitailizer documentInitailizer;
 
     private String seedUri;
-    //	private Properties grabingConfiguations;
     private Document doc;
+    private Connection conn;
 
     /**
      * 开始进行数据抓取前进行参数初始化
@@ -35,13 +31,8 @@ public class BaseUtil<T extends Class> extends BaseLogger {
             return null;
         }
         this.seedUri = targetUri;
-//		PropertiesIO io = new PropertiesIO();
-//		grabingConfiguations = io.initConnector(configuationPath);
+
         Connection conn = documentInitailizer.initConnectionByUrl(this.seedUri);
-        if (!Validation.isObjNull(conn))
-            this.doc = documentInitailizer.getDocumentByConn(conn);
-        else
-            log.error("could`t gettig html document from url: " + this.seedUri);
         return conn;
     }
 
@@ -88,4 +79,17 @@ public class BaseUtil<T extends Class> extends BaseLogger {
     public void setSeedUri(String seedUri) {
         this.seedUri = seedUri;
     }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
+    }
+
+    public DocumentInitailizer getDocumentInitailizer() {
+        return documentInitailizer;
+    }
+
 }
