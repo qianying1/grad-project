@@ -11,7 +11,7 @@ public interface AcfunGrabService{
 
 	void initJsoupDocumentConnection(Connection connection);
 
-	void initWebClient();
+	void initHtmlUnitWebClient();
 
-	void initWebRequest();
+	void initHtmlUnitWebRequest();
 }

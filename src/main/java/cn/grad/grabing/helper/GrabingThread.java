@@ -141,10 +141,10 @@ public class GrabingThread extends BaseUtil implements Runnable {
      */
     private void beginAcfunGrabing() {
         acfunGrabServiceImpl = (AcfunGrabServiceImpl) ApplicationContextUtil.getBean("acfunGrabServiceImpl");
-        Connection connection=acfunGrabServiceImpl.initBeforeGrabing(targetValue);
+        Connection connection = acfunGrabServiceImpl.initBeforeGrabing(targetValue);
         acfunGrabServiceImpl.initJsoupDocumentConnection(connection);
-        acfunGrabServiceImpl.initWebClient();
-        acfunGrabServiceImpl.initWebRequest();
+        acfunGrabServiceImpl.initHtmlUnitWebClient();
+        acfunGrabServiceImpl.initHtmlUnitWebRequest();
         acfunGrabServiceImpl.beginGrabing();
     }
 

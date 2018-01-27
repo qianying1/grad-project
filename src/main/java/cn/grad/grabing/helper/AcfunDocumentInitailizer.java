@@ -5,6 +5,8 @@ import cn.grad.grabing.util.Validation;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebClientOptions;
 import com.gargoylesoftware.htmlunit.WebRequest;
+import com.gargoylesoftware.htmlunit.util.Cookie;
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Connection;
@@ -98,6 +100,30 @@ public class AcfunDocumentInitailizer extends BaseLogger {
      * 是否在遇到脚本运行错误时抛出异常
      */
     private Boolean throwExceptionOnScriptError;
+    /**
+     * 代理端口
+     */
+    private Integer proxyPort;
+
+    /**
+     * 目标链接地址
+     */
+    private String url;
+
+    /**
+     * http请求字符编码
+     */
+    private String charset;
+
+    /**
+     * 代理地址
+     */
+    private String proxyHost;
+
+    /**
+     * 是否允许cookie传输
+     */
+    private Boolean cookieEnable;
 
     /**
      * 使用初始化参数进行初始化连接器
@@ -149,12 +175,143 @@ public class AcfunDocumentInitailizer extends BaseLogger {
         return conn;
     }
 
-    public static void initWebClientOptions(WebClientOptions webClientOptions){
+    public void initWebClient(WebClient webClient) {
+        if (!ObjectUtils.equals(getTimeout(), null)) {
+            webClient.getOptions().setTimeout(getTimeout());
+        }
+        if (StringUtils.isNotBlank(getUrl()) && StringUtils.isNotBlank(getCookieKey()) && StringUtils.isNotBlank(getCookieValue())) {
+            webClient.getCookieManager().addCookie(new Cookie(getUrl(), getCookieKey(), getCookieValue()));
+        }
+        if(BooleanUtils.isTrue(getCookieEnable())){
+            webClient.getCookieManager().setCookiesEnabled(getCookieEnable());
+        }
+        if(BooleanUtils.isTrue(getCssEnabled())){
+            webClient.getOptions().setCssEnabled(getCssEnabled());
+        }
+        if(BooleanUtils.isTrue(getFollowRedirects())){
+            webClient.getOptions().setRedirectEnabled(getFollowRedirects());
+        }
+        if(BooleanUtils.isTrue(getThrowExceptionOnFailingStatusCode())){
+            webClient.getOptions().setThrowExceptionOnFailingStatusCode(getThrowExceptionOnFailingStatusCode());
+        }
+        if(BooleanUtils.isTrue(getJavaScriptEnabled())){
+            webClient.getOptions().setJavaScriptEnabled(getJavaScriptEnabled());
+        }
+    }
+
+    public void initWebRequest(WebRequest request) throws Exception {
+        if (!ObjectUtils.equals(getUserAgent(), null)) {
+            request.getAdditionalHeaders().put("User-Agent", getUserAgent());
+        }
+        if (!ObjectUtils.equals(getReferrer(), null)) {
+            request.getAdditionalHeaders().put("Referer", getReferrer());
+        }
+        if (!ObjectUtils.equals(getCharset(), null)) {
+            request.setCharset(getCharset());
+        }
+        if (!ObjectUtils.equals(getProxyHost(), null)) {
+            request.setProxyHost(getProxyHost());
+        }
+        if (!ObjectUtils.equals(getProxyPort(), null)) {
+            request.setProxyPort(getProxyPort());
+        }
+        if (StringUtils.isNotBlank(getUrl())) {
+            request.setUrl(new URL(getUrl()));
+        }
 
     }
 
-    public static void initWebRequest(WebRequest request){
+    /**
+     * 获取是否允许cookie传输
+     *
+     * @return
+     */
+    public Boolean getCookieEnable() {
+        return cookieEnable;
+    }
 
+    /**
+     * 设置是否允许cookie传输
+     *
+     * @param cookieEnable
+     */
+    @Value("#{acfunConfigs['webClient.cookieManager.cookiesEnabled']}")
+    public void setCookieEnable(Boolean cookieEnable) {
+        this.cookieEnable = cookieEnable;
+    }
+
+    /**
+     * 获取目标地址
+     *
+     * @return
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * 设置目标地址
+     *
+     * @param url
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /**
+     * 获取代理端口
+     *
+     * @return
+     */
+    public Integer getProxyPort() {
+        return proxyPort;
+    }
+
+    /**
+     * 设置代理端口
+     * @param proxyPort
+     */
+    @Value("#{acfunConfigs['webRequest.proxyPort']}")
+    public void setProxyPort(Integer proxyPort) {
+        this.proxyPort = proxyPort;
+    }
+
+    /**
+     * 获取代理地址
+     *
+     * @return
+     */
+    public String getProxyHost() {
+        return proxyHost;
+    }
+
+    /**
+     * 设置代理地址
+     *
+     * @param proxyHost
+     */
+    @Value("#{acfunConfigs['webRequest.proxyHost']}")
+    public void setProxyHost(String proxyHost) {
+        this.proxyHost = proxyHost;
+    }
+
+    /**
+     * 获取请求编码
+     *
+     * @return
+     */
+    public String getCharset() {
+        return charset;
+    }
+
+    /**
+     * 设置请求编码
+     *
+     * @param charset
+     */
+    @Value("#{acfunConfigs['webRequest.charset']}")
+    public void setCharset(String charset) {
+        this.charset = charset;
     }
 
     /**
@@ -162,7 +319,7 @@ public class AcfunDocumentInitailizer extends BaseLogger {
      *
      * @param timeout
      */
-    @Value("#{acfunConfigs['timeout']}")
+    @Value("#{acfunConfigs['webClient.timeout']}")
     public void setTimeout(int timeout) {
         this.timeout = timeout;
     }

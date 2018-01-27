@@ -91,12 +91,17 @@ public class AcfunGrabServiceImpl extends BaseUtil implements AcfunGrabService {
         setConn(connection);
     }
 
-    public void initWebClient() {
-        acfunDocumentInitailizer.initWebClientOptions(webClient.getOptions());
+    public void initHtmlUnitWebClient() {
+        acfunDocumentInitailizer.initWebClient(webClient);
     }
 
-    public void initWebRequest() {
-        acfunDocumentInitailizer.initWebRequest(webRequest);
+    public void initHtmlUnitWebRequest() {
+        try{
+            acfunDocumentInitailizer.initWebRequest(webRequest);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("fail to init param in document init method nest exception is : "+e);
+        }
     }
 
 }
