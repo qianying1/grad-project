@@ -4,7 +4,7 @@ import org.jsoup.Connection;
 
 public interface BiliBiliGrabService {
 
-	void beginGrabing();
+	void beginGrabing(Connection jsoupConn);
 
 	Connection initBeforeGrabing(String targetValue);
 

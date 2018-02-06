@@ -4,6 +4,7 @@ import cn.grad.grabing.dao.helper.GrabLibDaoHelper;
 import cn.grad.grabing.entity.Navigation;
 import cn.grad.grabing.support.acfunc.IndexAnalizer;
 import cn.grad.grabing.util.Validation;
+import com.gargoylesoftware.htmlunit.Page;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,4 +27,5 @@ public class HeaderServiceHelper {
             grabLibDaoHelper.insertGrabLibs(navigation);
         }
     }
+
 }

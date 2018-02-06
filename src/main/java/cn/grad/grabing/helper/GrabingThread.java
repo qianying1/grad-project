@@ -74,6 +74,27 @@ public class GrabingThread extends BaseUtil implements Runnable {
     }
 
     /**
+     * 准备进行a站的数据抓取
+     */
+    private void beginAcfunGrabing() {
+        acfunGrabServiceImpl = (AcfunGrabServiceImpl) ApplicationContextUtil.getBean("acfunGrabServiceImpl");
+        Connection connection = acfunGrabServiceImpl.initBeforeGrabing(targetValue);
+        acfunGrabServiceImpl.initJsoupDocumentConnection(connection);
+        acfunGrabServiceImpl.initHtmlUnitWebClient();
+        acfunGrabServiceImpl.initHtmlUnitWebRequest();
+        acfunGrabServiceImpl.beginGrabing();
+    }
+
+    /**
+     * 准备进行B站的数据抓取
+     */
+    private void beginBilibiliGrabing() {
+        biliBiliGrabServiceImpl = (BilibiliGrabServiceImpl) ApplicationContextUtil.getBean("bilibiliGrabServiceImpl");
+        Connection connection=biliBiliGrabServiceImpl.initBeforeGrabing(targetValue);
+        biliBiliGrabServiceImpl.beginGrabing(connection);
+    }
+
+    /**
      * 准备进行优酷网站的数据抓取
      */
     private void beginYoukuGrabing() {
@@ -125,27 +146,6 @@ public class GrabingThread extends BaseUtil implements Runnable {
         leshiGrabServiceImpl = (LeshiGrabServiceImpl) ApplicationContextUtil.getBean("leshiGrabServiceImpl");
         leshiGrabServiceImpl.initBeforeGrabing(targetValue);
         leshiGrabServiceImpl.beginGrabing();
-    }
-
-    /**
-     * 准备进行B站的数据抓取
-     */
-    private void beginBilibiliGrabing() {
-        biliBiliGrabServiceImpl = (BilibiliGrabServiceImpl) ApplicationContextUtil.getBean("bilibiliGrabServiceImpl");
-        biliBiliGrabServiceImpl.initBeforeGrabing(targetValue);
-        biliBiliGrabServiceImpl.beginGrabing();
-    }
-
-    /**
-     * 准备进行a站的数据抓取
-     */
-    private void beginAcfunGrabing() {
-        acfunGrabServiceImpl = (AcfunGrabServiceImpl) ApplicationContextUtil.getBean("acfunGrabServiceImpl");
-        Connection connection = acfunGrabServiceImpl.initBeforeGrabing(targetValue);
-        acfunGrabServiceImpl.initJsoupDocumentConnection(connection);
-        acfunGrabServiceImpl.initHtmlUnitWebClient();
-        acfunGrabServiceImpl.initHtmlUnitWebRequest();
-        acfunGrabServiceImpl.beginGrabing();
     }
 
     /**

@@ -7,6 +7,7 @@ import cn.grad.grabing.service.AcfunGrabService;
 import cn.grad.grabing.util.BaseUtil;
 import cn.grad.grabing.util.StrPropertiesMapper;
 import cn.grad.grabing.util.Validation;
+import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebClientOptions;
 import com.gargoylesoftware.htmlunit.WebRequest;
@@ -83,7 +84,14 @@ public class AcfunGrabServiceImpl extends BaseUtil implements AcfunGrabService {
         /**
          * 娱乐
          */
-        entertainmentServiceHelper.analizeEntertainmentSection(getDoc());
+        Page page=null;
+        try {
+            page=webClient.getPage(this.getSeedUri());
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("fail to get page from acfun url nest exception is: "+e);
+        }
+        entertainmentServiceHelper.analizeEntertainmentSection(page,getDoc());
     }
 
     public void initJsoupDocumentConnection(Connection connection) {

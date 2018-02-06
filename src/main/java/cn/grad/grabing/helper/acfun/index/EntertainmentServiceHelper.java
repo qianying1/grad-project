@@ -6,6 +6,7 @@ import cn.grad.grabing.helper.DocumentInitailizer;
 import cn.grad.grabing.helper.acfun.SectionUtil;
 import cn.grad.grabing.util.BaseLogger;
 import cn.grad.grabing.util.StrPropertiesMapper;
+import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebRequest;
 import org.jsoup.nodes.Document;
@@ -43,7 +44,8 @@ public class EntertainmentServiceHelper extends BaseLogger{
      *
      * @param doc
      */
-    public void analizeEntertainmentSection(Document doc) {
+    public void analizeEntertainmentSection(Page page,Document doc) {
+        System.out.println(page.getWebResponse());
         Element section = SectionUtil.getSectionByName(SectionUtil.ENTERTAINMENT, doc);
         /**
          * 分析左边模块
